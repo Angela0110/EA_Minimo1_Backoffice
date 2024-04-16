@@ -1,0 +1,26 @@
+
+  .delete-button {
+    order: -1; /* Coloca el botón de eliminar al principio del contenedor */
+    padding: 5px 10px;
+    font-size: 12px;
+    color: red;
+    font-style: bold;
+    border: 1px solid red;
+  }
+  
+  .label {
+    font-weight: bold;
+  }
+  
+  .address {
+    margin-top: 5px; /* Espacio entre "Address" y la dirección */
+  }
+  
+  .custom-button {
+    margin-top: 5px; /* Espacio entre "Activity" y el botón */
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+
+  

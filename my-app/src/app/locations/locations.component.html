@@ -1,0 +1,58 @@
+<h2>Locations</h2>
+
+<button type="button" *ngIf="!showAddLocationForm"  (click)="showAddLocation(true)">Add new location</button>
+<button type="button" *ngIf="showAddLocationForm"  (click)="showAddLocation(false)">-</button>
+
+<div *ngIf="showAddLocationForm && !isActivitySelected">
+  <form [formGroup]="postLocationForm" (ngSubmit)="postLocation()">
+
+    <div formGroupName="address">
+      <label for="street" >Address:</label>
+      <input type="text" id="street" formControlName="street"><br>
+      <div *ngIf="postLocationForm.get('address.street')?.invalid && (postLocationForm.get('address.street')?.dirty || postLocationForm.get('address.address')?.touched)">
+        <div *ngIf="postLocationForm.get('address.street')?.errors?.['required']" class="required-error">Address es obligatorio.</div>
+      </div>
+    
+      <label for="postalcode">Postal code:</label>
+      <input type="number" id="postalcode" formControlName="postalcode"><br>
+      <div *ngIf="postLocationForm.get('address.postalcode')?.invalid && (postLocationForm.get('address.postalcode')?.dirty || postLocationForm.get('address.postalcode')?.touched)">
+        <div *ngIf="postLocationForm.get('address.postalcode')?.errors?.['required']" class="required-error">Postal code es obligatorio.</div>
+      </div>
+    
+      <label for="city">City:</label>
+      <input type="text" id="city" formControlName="city"><br>
+      <div *ngIf="postLocationForm.get('address.city')?.invalid && (postLocationForm.get('address.city')?.dirty || postLocationForm.get('address.city')?.touched)">
+        <div *ngIf="postLocationForm.get('address.city')?.errors?.['required']" class="required-error">Last Name es obligatorio.</div>
+      </div>
+    </div>
+    
+    <label for="activity">Activity:</label>
+    <input type="text" id="activity" formControlName="activity"><br>
+    <div *ngIf="postLocationForm.get('activity')?.invalid && (postLocationForm.get('activity')?.dirty || postLocationForm.get('activity')?.touched)">
+      <div *ngIf="postLocationForm.get('activity')?.errors?.['required']" class="required-error">Activity es requerido.</div>
+    </div>
+    
+    
+    <button type="submit" [disabled]="postLocationForm.invalid">Add location</button> 
+  </form>
+</div>
+
+<ul class="locations">
+    <li *ngFor="let location of locations">
+      <div class="location-item">
+        <div class="address-container">
+          <span class="label">Address: </span>
+          <span class="address">{{ location.address.street }}, {{ location.address.postalcode }}, {{ location.address.city }}</span>
+        </div>
+        <div class="activity-container">
+          <span class="label">Activity: </span> 
+          <button class="custom-button" type="button" (click)="onSelect(location.activity)">
+            <span>{{location.activity.name}}</span>
+          </button>
+        </div>
+        <button class="delete-button" (click)="onDelete(location)">X</button>
+      </div>
+    </li>
+  </ul>
+
+<app-activity-details *ngIf="selectedActivity" [activity]="selectedActivity" (deselect)="deselectActivity()" (activityUpdated)="onActivityUpdated($event)"></app-activity-details> 
